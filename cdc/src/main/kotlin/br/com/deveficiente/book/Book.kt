@@ -9,12 +9,12 @@ import javax.validation.constraints.*
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 3;
-    (UniqueValue, Author, Category)
+    * Pontos por acoplamento: 4;
+    (UniqueValue, Author, Category, DetailBookResponse)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 3
+    Total de Pontos: 4
  */
 
 @Entity
@@ -58,4 +58,11 @@ class Book(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
+
+    fun toResponse(): DetailBookResponse {
+        return DetailBookResponse(
+            title, resume, summary, price, pages, isbn, publicationDate, category.name,
+            author.name, author.description
+        )
+    }
 }
