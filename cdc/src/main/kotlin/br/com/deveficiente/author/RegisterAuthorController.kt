@@ -18,7 +18,7 @@ import javax.validation.Valid
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 2
+    Total de Pontos: 3
  */
 
 @Controller("/api/author")
