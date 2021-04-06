@@ -39,7 +39,7 @@ annotation class UniqueValue(
     * Pontos por acoplamento: 1;
     (UniqueValue)
     * Pontos por branchs: 2;
-    (If e teste no return)
+    (If e if no return)
     * Pontos função como argumento: 0;
 
     Total de Pontos: 3

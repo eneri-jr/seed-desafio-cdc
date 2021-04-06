@@ -6,6 +6,16 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.validation.Validated
 import javax.validation.Valid
 
+/*
+- Pela técnica do CDD temos nesta classe:
+    * Pontos por acoplamento: 1;
+    (PaymentRequest)
+    * Pontos por branchs: 0;
+    * Pontos função como argumento: 0;
+
+    Total de Pontos: 1
+ */
+
 @Controller("/api/payment")
 @Validated
 class RegisterPaymentController {
