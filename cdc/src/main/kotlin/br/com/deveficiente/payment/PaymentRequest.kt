@@ -1,21 +1,28 @@
 package br.com.deveficiente.payment
 
+import br.com.deveficiente.country.CountryRepository
+import br.com.deveficiente.payment.items.Items
+import br.com.deveficiente.payment.buy.Buy
 import br.com.deveficiente.shared.validations.CpfOrCnpj
 import br.com.deveficiente.shared.validations.ExistingObject
 import br.com.deveficiente.shared.validations.ValidCountryState
+import br.com.deveficiente.state.StateRepository
 import io.micronaut.core.annotation.Introspected
+import java.util.stream.Collectors
+import javax.validation.Valid
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 3;
-    (ExistingObject, CpfOrCnpj, ValidCountryState)
-    * Pontos por branchs: 0;
+    * Pontos por acoplamento: 8;
+    (ExistingObject, CpfOrCnpj, ValidCountryState, ShoppingCartRequest, CountryRepository, StateRepository, Buy, Items)
+    * Pontos por branchs: 1;
+    (map)
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 3
+    Total de Pontos: 9
  */
 
 @Introspected
@@ -55,5 +62,36 @@ data class PaymentRequest(
     val phone: String,
 
     @field:NotBlank
-    val cep: String
-)
+    val cep: String,
+
+    @field:NotNull
+    @field:Valid
+    val shoppingCart: ShoppingCartRequest
+
+) {
+    fun toModel(countryRepository: CountryRepository, stateRepository: StateRepository): Buy {
+        val country = countryRepository.findById(idCountry)
+        val state = stateRepository.findById(idState)
+
+        val newListItems: MutableList<Items> = shoppingCart.listItems.stream().map {
+            Items(it.id, it.amount)
+        }.collect(Collectors.toList())
+
+        return Buy(
+            email,
+            name,
+            lastName,
+            document,
+            address,
+            complement,
+            city,
+            country.get(),
+            state.get(),
+            phone,
+            cep,
+            shoppingCart.total,
+            newListItems
+        )
+
+    }
+}
