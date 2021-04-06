@@ -40,7 +40,7 @@ annotation class ExistingObject(
     * Pontos por acoplamento: 1;
     (ExistingObject)
     * Pontos por branchs: 1;
-    (Teste no return)
+    (if no return)
     * Pontos função como argumento: 0;
 
     Total de Pontos: 2

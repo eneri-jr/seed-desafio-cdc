@@ -8,17 +8,40 @@ import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator
 import javax.inject.Singleton
 import javax.validation.Constraint
 import javax.validation.Payload
+import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.FIELD
 import kotlin.reflect.KClass
 
+/*
+- Pela técnica do CDD temos nesta classe:
+    * Pontos por acoplamento: 1;
+    (CpfOrCnpjValidator)
+    * Pontos por branchs: 0;
+    * Pontos função como argumento: 0;
+
+    Total de Pontos: 1
+ */
+
 @MustBeDocumented
-@Target(AnnotationTarget.FIELD)
-@Retention(AnnotationRetention.RUNTIME)
+@Target(FIELD)
+@Retention(RUNTIME)
 @Constraint(validatedBy = [CpfOrCnpjValidator::class])
 annotation class CpfOrCnpj(
     val message: String = "Documento inválido",
     val groups: Array<KClass<Any>> = [],
     val payload: Array<KClass<Payload>> = []
 )
+
+/*
+- Pela técnica do CDD temos nesta classe:
+    * Pontos por acoplamento: 1;
+    (CpfOrCnpj)
+    * Pontos por branchs: 1;
+    (if no return)
+    * Pontos função como argumento: 0;
+
+    Total de Pontos: 2
+ */
 
 @Singleton
 class CpfOrCnpjValidator : ConstraintValidator<CpfOrCnpj, Any> {
