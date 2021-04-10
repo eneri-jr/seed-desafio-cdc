@@ -28,7 +28,7 @@ class RegisterCategoryController(val categoryRepository: CategoryRepository) {
     fun register(@Body @Valid categoryRequest: CategoryRequest) : HttpResponse<Any> {
         logger.info("Category record: ${categoryRequest.name}")
 
-        val newCategory: Category = categoryRequest.toModel()
+        val newCategory: Category = Category(categoryRequest.name)
         categoryRepository.save(newCategory)
 
         logger.info("Category ${newCategory.name} sucessfully registered")
