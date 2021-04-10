@@ -4,7 +4,6 @@ import br.com.deveficiente.country.Country
 import br.com.deveficiente.coupon.Coupon
 import br.com.deveficiente.payment.items.Items
 import br.com.deveficiente.state.State
-import jdk.jfr.Percentage
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
@@ -12,12 +11,12 @@ import javax.validation.constraints.NotNull
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 3;
-    (Country, State, Items)
+    * Pontos por acoplamento: 5;
+    (Country, State, Items, Coupon, DetailBuyResponse)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 3
+    Total de Pontos: 5
  */
 
 @Entity
@@ -66,25 +65,38 @@ class Buy(
     val listItems: List<Items>? = null,
 
     @ManyToOne
-    val coupon: Coupon? = null
+    var coupon: Coupon? = null
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 
 
-
-
-    fun toResponse() : DetailBuyResponse {
+    fun toResponse(): DetailBuyResponse {
         var totalFinal: Double = total
-        var existsCoupon : Boolean = false
+        var existsCoupon: Boolean = false
 
-        if(coupon != null){
-            totalFinal = total - (total / 100 * coupon.percentage!!)
+        if (coupon != null) {
+            totalFinal = total - (total / 100 * coupon!!.percentage!!)
             existsCoupon = true
         }
 
-        return DetailBuyResponse(email, name, lastName, document, address, complement, city, country.name, state.name, phone, cep, total, existsCoupon, totalFinal)
+        return DetailBuyResponse(
+            email,
+            name,
+            lastName,
+            document,
+            address,
+            complement,
+            city,
+            country.name,
+            state.name,
+            phone,
+            cep,
+            total,
+            existsCoupon,
+            totalFinal
+        )
     }
 
 }

@@ -9,12 +9,12 @@ import javax.validation.constraints.NotNull
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 4;
-    (UniqueValue, ExistingObject, CountryRepository, Country)
+    * Pontos por acoplamento: 2;
+    (CountryRepository, Country)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 4
+    Total de Pontos: 2
  */
 
 @Introspected

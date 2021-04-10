@@ -6,12 +6,11 @@ import javax.validation.constraints.NotBlank
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 1;
-    (Category)
+    * Pontos por acoplamento: 0;
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 1
+    Total de Pontos: 0
  */
 
 @Introspected
@@ -21,8 +20,4 @@ data class CategoryRequest(
     @field:UniqueValue(field = "name", table = "Category")
     val name: String
 
-) {
-    fun toModel(): Category {
-        return Category(name)
-    }
-}
+)

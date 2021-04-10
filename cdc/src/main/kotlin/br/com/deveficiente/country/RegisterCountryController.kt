@@ -28,7 +28,7 @@ class RegisterCountryController(val countryRepository: CountryRepository) {
     fun register(@Body @Valid countryRequest: CountryRequest): HttpResponse<Any> {
         logger.info("Country record: ${countryRequest.name}")
 
-        val newCountry: Country = countryRequest.toModel()
+        val newCountry: Country = Country(countryRequest.name)
         countryRepository.save(newCountry)
 
         logger.info("Country ${newCountry.name} sucessfully registered")
