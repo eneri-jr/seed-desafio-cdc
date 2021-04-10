@@ -6,6 +6,7 @@ import br.com.deveficiente.payment.buy.Buy
 import br.com.deveficiente.shared.validations.CpfOrCnpj
 import br.com.deveficiente.shared.validations.ExistingObject
 import br.com.deveficiente.shared.validations.ValidCountryState
+import br.com.deveficiente.shared.validations.ValidCoupon
 import br.com.deveficiente.state.StateRepository
 import io.micronaut.core.annotation.Introspected
 import java.util.stream.Collectors
@@ -16,13 +17,13 @@ import javax.validation.constraints.NotNull
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 8;
-    (ExistingObject, CpfOrCnpj, ValidCountryState, ShoppingCartRequest, CountryRepository, StateRepository, Buy, Items)
+    * Pontos por acoplamento: 5;
+    (ShoppingCartRequest, CountryRepository, StateRepository, Buy, Items)
     * Pontos por branchs: 1;
     (map)
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 9
+    Total de Pontos: 6
  */
 
 @Introspected
@@ -66,7 +67,11 @@ data class PaymentRequest(
 
     @field:NotNull
     @field:Valid
-    val shoppingCart: ShoppingCartRequest
+    val shoppingCart: ShoppingCartRequest,
+
+    @field:NotBlank
+    @field:ValidCoupon()
+    val coupon: String
 
 ) {
     fun toModel(countryRepository: CountryRepository, stateRepository: StateRepository): Buy {

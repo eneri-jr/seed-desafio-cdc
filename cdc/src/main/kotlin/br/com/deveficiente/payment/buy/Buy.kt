@@ -2,7 +2,6 @@ package br.com.deveficiente.payment.buy
 
 import br.com.deveficiente.country.Country
 import br.com.deveficiente.payment.items.Items
-import br.com.deveficiente.shared.validations.CpfOrCnpj
 import br.com.deveficiente.state.State
 import javax.persistence.*
 import javax.validation.constraints.Email
@@ -11,12 +10,12 @@ import javax.validation.constraints.NotNull
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 4;
-    (CpfOrCnpj, Country, State, Items)
+    * Pontos por acoplamento: 3;
+    (Country, State, Items)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 4
+    Total de Pontos: 3
  */
 
 @Entity
@@ -33,7 +32,6 @@ class Buy(
     val lastName: String,
 
     @field:NotBlank
-    @field:CpfOrCnpj
     val document: String,
 
     @field:NotBlank

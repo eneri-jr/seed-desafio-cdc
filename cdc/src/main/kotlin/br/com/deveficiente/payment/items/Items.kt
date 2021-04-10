@@ -1,6 +1,5 @@
 package br.com.deveficiente.payment.items
 
-import br.com.deveficiente.shared.validations.ExistingObject
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -10,19 +9,17 @@ import javax.validation.constraints.Positive
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 1;
-    (ExistingObject)
+    * Pontos por acoplamento: 0;
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 1
+    Total de Pontos: 0
  */
 
 @Entity
 class Items(
 
     @field:NotNull
-    @field:ExistingObject(field = "id", table = "Book")
     val idProduto: Long,
 
     @field:NotNull

@@ -11,9 +11,7 @@ import javax.validation.Valid
 /*
 - Pela técnica do CDD temos nesta classe:
     * Pontos por acoplamento: 3;
-    (CategoryRepository)
-    (CategoryRequest)
-    (Category)
+    (CategoryRepository, CategoryRequest, Category)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 

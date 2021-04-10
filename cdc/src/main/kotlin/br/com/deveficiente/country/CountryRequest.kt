@@ -6,12 +6,12 @@ import javax.validation.constraints.NotBlank
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 2;
-    (Country, UniqueValue)
+    * Pontos por acoplamento: 1;
+    (Country)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 2
+    Total de Pontos: 1
  */
 
 @Introspected

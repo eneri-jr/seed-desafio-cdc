@@ -1,6 +1,5 @@
 package br.com.deveficiente.coupon
 
-import br.com.deveficiente.shared.validations.UniqueValue
 import java.time.LocalDate
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -13,18 +12,16 @@ import javax.validation.constraints.Positive
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 1;
-    (UniqueValue)
+    * Pontos por acoplamento: 0;
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 1
+    Total de Pontos: 0
  */
 
 @Entity
 class Coupon(
     @field:NotBlank
-    @field:UniqueValue(field = "code", table = "Coupon")
     val code: String,
 
     @field:NotNull
