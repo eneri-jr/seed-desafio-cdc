@@ -1,6 +1,8 @@
 package br.com.deveficiente.payment
 
 import br.com.deveficiente.country.CountryRepository
+import br.com.deveficiente.coupon.Coupon
+import br.com.deveficiente.coupon.CouponRepository
 import br.com.deveficiente.payment.items.Items
 import br.com.deveficiente.payment.buy.Buy
 import br.com.deveficiente.shared.validations.CpfOrCnpj
@@ -69,18 +71,38 @@ data class PaymentRequest(
     @field:Valid
     val shoppingCart: ShoppingCartRequest,
 
-    @field:NotBlank
     @field:ValidCoupon()
-    val coupon: String
+    val codeCoupon: String?
 
 ) {
-    fun toModel(countryRepository: CountryRepository, stateRepository: StateRepository): Buy {
+    fun toModel(countryRepository: CountryRepository, stateRepository: StateRepository, couponRepository: CouponRepository): Buy {
         val country = countryRepository.findById(idCountry)
         val state = stateRepository.findById(idState)
 
         val newListItems: MutableList<Items> = shoppingCart.listItems.stream().map {
             Items(it.id, it.amount)
         }.collect(Collectors.toList())
+
+        if (codeCoupon != null) {
+            val coupon = couponRepository.findByCode(codeCoupon!!)
+
+            return Buy(
+                email,
+                name,
+                lastName,
+                document,
+                address,
+                complement,
+                city,
+                country.get(),
+                state.get(),
+                phone,
+                cep,
+                shoppingCart.total,
+                newListItems,
+                coupon
+            )
+        }
 
         return Buy(
             email,
@@ -97,6 +119,5 @@ data class PaymentRequest(
             shoppingCart.total,
             newListItems
         )
-
     }
 }
