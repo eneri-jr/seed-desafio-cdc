@@ -27,7 +27,7 @@ import kotlin.reflect.KClass
 @Retention(RUNTIME)
 @Constraint(validatedBy = [CpfOrCnpjValidator::class])
 annotation class CpfOrCnpj(
-    val message: String = "Documento inválido",
+    val message: String = "Invalid document.",
     val groups: Array<KClass<Any>> = [],
     val payload: Array<KClass<Payload>> = []
 )

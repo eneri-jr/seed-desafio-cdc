@@ -2,26 +2,24 @@ package br.com.deveficiente.book
 
 import br.com.deveficiente.author.Author
 import br.com.deveficiente.category.Category
-import br.com.deveficiente.shared.validations.UniqueValue
 import java.time.LocalDate
 import javax.persistence.*
 import javax.validation.constraints.*
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 4;
-    (UniqueValue, Author, Category, DetailBookResponse)
+    * Pontos por acoplamento: 3;
+    (Author, Category, DetailBookResponse)
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 4
+    Total de Pontos: 3
  */
 
 @Entity
 class Book(
 
     @field:NotBlank
-    @field:UniqueValue(field = "title", table = "Book")
     val title: String,
 
     @field:NotBlank
@@ -40,7 +38,6 @@ class Book(
     val pages: Int,
 
     @field:NotBlank
-    @field:UniqueValue(field = "isbn", table = "Book")
     val isbn: String,
 
     @field:NotNull

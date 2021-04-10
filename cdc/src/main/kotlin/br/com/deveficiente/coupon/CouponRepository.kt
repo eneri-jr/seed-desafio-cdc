@@ -2,6 +2,7 @@ package br.com.deveficiente.coupon
 
 import io.micronaut.data.annotation.Repository
 import io.micronaut.data.jpa.repository.JpaRepository
+import java.util.*
 
 /*
 - Pela técnica do CDD temos nesta classe:
@@ -14,4 +15,7 @@ import io.micronaut.data.jpa.repository.JpaRepository
  */
 
 @Repository
-interface CouponRepository: JpaRepository<Coupon, Long>
+interface CouponRepository: JpaRepository<Coupon, Long> {
+
+    fun findByCode(code: String) : Coupon?
+}

@@ -1,6 +1,5 @@
 package br.com.deveficiente.author
 
-import br.com.deveficiente.shared.validations.UniqueValue
 import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -12,19 +11,17 @@ import javax.validation.constraints.Size
 
 /*
 - Pela técnica do CDD temos nesta classe:
-    * Pontos por acoplamento: 1;
-    (UniqueValue)
+    * Pontos por acoplamento: 0;
     * Pontos por branchs: 0;
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 1
+    Total de Pontos: 0
  */
 
 @Entity
 class Author(
 
     @field:Email
-    @field:UniqueValue(field = "email", table = "Author")
     val email: String,
 
     @field:NotBlank
