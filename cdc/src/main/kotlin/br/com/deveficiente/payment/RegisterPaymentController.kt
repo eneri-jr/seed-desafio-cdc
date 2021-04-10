@@ -2,6 +2,7 @@ package br.com.deveficiente.payment
 
 import br.com.deveficiente.book.BookRepository
 import br.com.deveficiente.country.CountryRepository
+import br.com.deveficiente.coupon.CouponRepository
 import br.com.deveficiente.payment.buy.Buy
 import br.com.deveficiente.payment.buy.BuyRepository
 import br.com.deveficiente.state.StateRepository
@@ -30,15 +31,16 @@ class RegisterPaymentController(
     val countryRepository: CountryRepository,
     val stateRepository: StateRepository,
     val buyRepository: BuyRepository,
+    val couponRepository: CouponRepository
 ) {
 
     @Post
-    fun register(@Body @Valid paymentRequest: PaymentRequest): HttpResponse<Any> {
+    fun register(@Body @Valid paymentRequest: PaymentRequest) : HttpResponse<Any>{
         val valid: Boolean = paymentRequest.shoppingCart.validTotal(bookRepository)
         if (!valid)
             return HttpResponse.badRequest("The shopping cart total is invalid.")
 
-        val newBuy: Buy = paymentRequest.toModel(countryRepository, stateRepository)
+        val newBuy: Buy = paymentRequest.toModel(countryRepository, stateRepository, couponRepository)
         buyRepository.save(newBuy)
 
         val location = HttpResponse.uri("/api/author/${newBuy.id}")

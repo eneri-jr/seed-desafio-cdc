@@ -1,5 +1,6 @@
 package br.com.deveficiente.shared.validations
 
+import br.com.deveficiente.coupon.Coupon
 import br.com.deveficiente.coupon.CouponRepository
 import io.micronaut.core.annotation.AnnotationValue
 import javax.inject.Singleton
@@ -39,30 +40,32 @@ annotation class ValidCoupon (
 - Pela técnica do CDD temos nesta classe:
     * Pontos por acoplamento: 3;
     (CouponRepository, ValidCoupon, Coupon)
-    * Pontos por branchs: 2;
-    (if, if no return)
+    * Pontos por branchs: 3;
+    (if, if,  if no return)
     * Pontos função como argumento: 0;
 
-    Total de Pontos: 5
+    Total de Pontos: 6
  */
 
 @Singleton
-open class ValidCouponValidator (val couponRepository: CouponRepository) : ConstraintValidator<ValidCoupon, Any> {
+open class ValidCouponValidator (val couponRepository: CouponRepository) : ConstraintValidator<ValidCoupon, String> {
 
     @Transactional
     override fun isValid(
-        value: Any,
+        value: String?,
         annotationMetadata: AnnotationValue<ValidCoupon>,
         context: ConstraintValidatorContext
     ): Boolean {
+        if(value.isNullOrBlank())
+            return true
 
-        val possibleCoupon = couponRepository.findByCode(value.toString())
+        val possibleCoupon: Coupon? = couponRepository.findByCode(value.toString())
 
         if(possibleCoupon == null)
-        return false;
+            return false;
 
         val date = LocalDate.now()
-        return possibleCoupon.expirationDate.isAfter(date)
+        return possibleCoupon.expirationDate!!.isAfter(date)
     }
 
 }

@@ -1,8 +1,10 @@
 package br.com.deveficiente.payment.buy
 
 import br.com.deveficiente.country.Country
+import br.com.deveficiente.coupon.Coupon
 import br.com.deveficiente.payment.items.Items
 import br.com.deveficiente.state.State
+import jdk.jfr.Percentage
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
@@ -38,7 +40,7 @@ class Buy(
     val address: String,
 
     @field:NotBlank
-    var complement: String,
+    val complement: String,
 
     @field:NotBlank
     val city: String,
@@ -61,11 +63,28 @@ class Buy(
 
     //Ira criar automaticamente uma tabela Buy_Items
     @OneToMany(cascade = [CascadeType.ALL])
-    val listItems: List<Items>? = null
+    val listItems: List<Items>? = null,
 
+    @ManyToOne
+    val coupon: Coupon? = null
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
+
+
+
+
+    fun toResponse() : DetailBuyResponse {
+        var totalFinal: Double = total
+        var existsCoupon : Boolean = false
+
+        if(coupon != null){
+            totalFinal = total - (total / 100 * coupon.percentage!!)
+            existsCoupon = true
+        }
+
+        return DetailBuyResponse(email, name, lastName, document, address, complement, city, country.name, state.name, phone, cep, total, existsCoupon, totalFinal)
+    }
 
 }
